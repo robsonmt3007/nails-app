@@ -1,11 +1,11 @@
 // Configurações
 const CONFIG = {
-    WHATSAPP_NUMBER: '5511999999999', // Substitua pelo seu número
-    BUSINESS_NAME: 'Nails Designer',
+    WHATSAPP_NUMBER: '5585985158020', // Substitua pelo seu número
+    BUSINESS_NAME: 'Rita Andrade Nails',
     WORKING_HOURS: {
-        start: 9, // 9:00
-        end: 19,  // 19:00
-        interval: 60 // minutos entre horários
+        start: 9, // 7:00
+        end: 19,  // 17:00
+        interval: 30 // minutos entre horários
     }
 };
 
