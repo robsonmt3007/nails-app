@@ -1,0 +1,168 @@
+nails-app/
+├── index.html
+├── manifest.json
+├── service-worker.js
+├── styles.css
+├── app.js
+└── icons/
+    ├── icon-72.png
+    ├── icon-96.png
+    ├── icon-128.png
+    ├── icon-144.png
+    ├── icon-152.png
+    ├── icon-192.png
+    └── icon-384.png
+
+    <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nails Designer - Agendamentos</title>
+    <meta name="description" content="Agende seus horários de forma fácil e rápida">
+    <meta name="theme-color" content="#e83e8c">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Tela de Loading -->
+    <div id="splash-screen">
+        <div class="spinner"></div>
+        <h2>Nails Designer</h2>
+        <p>Carregando agendamentos...</p>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div id="main-content" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-calendar-check"></i> Nails Designer</h1>
+                <button id="menu-toggle" class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Menu Lateral -->
+        <nav id="sidebar" class="sidebar">
+            <ul>
+                <li><a href="#" onclick="showSection('agendamento')"><i class="fas fa-plus-circle"></i> Novo Agendamento</a></li>
+                <li><a href="#" onclick="showSection('meus-agendamentos')"><i class="fas fa-list"></i> Meus Agendamentos</a></li>
+                <li><a href="#" onclick="showSection('servicos')"><i class="fas fa-paint-brush"></i> Serviços</a></li>
+                <li><a href="#" onclick="showSection('sobre')"><i class="fas fa-info-circle"></i> Sobre</a></li>
+            </ul>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main>
+            <!-- Seção de Agendamento -->
+            <section id="agendamento" class="section active">
+                <h2>Novo Agendamento</h2>
+                
+                <div class="form-group">
+                    <label for="nome">Seu Nome:</label>
+                    <input type="text" id="nome" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">WhatsApp:</label>
+                    <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="servico">Serviço Desejado:</label>
+                    <select id="servico" required>
+                        <option value="">Selecione um serviço</option>
+                        <option value="unhas-simples">Unhas Simples - R$ 45,00</option>
+                        <option value="unhas-decoradas">Unhas Decoradas - R$ 65,00</option>
+                        <option value="alongamento-gel">Alongamento em Gel - R$ 120,00</option>
+                        <option value="alongamento-fibra">Alongamento em Fibra - R$ 150,00</option>
+                        <option value="manicure-pedicure">Manicure + Pedicure - R$ 80,00</option>
+                        <option value="spa-dos-pes">Spa dos Pés - R$ 55,00</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" required min="">
+                </div>
+
+                <div class="form-group">
+                    <label for="hora">Horário:</label>
+                    <select id="hora" required>
+                        <option value="">Selecione um horário</option>
+                        <!-- Horários serão populados via JavaScript -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações:</label>
+                    <textarea id="observacoes" placeholder="Alguma observação especial? (opcional)" rows="3"></textarea>
+                </div>
+
+                <button onclick="agendar()" class="btn-agendar">
+                    <i class="fab fa-whatsapp"></i> Agendar via WhatsApp
+                </button>
+            </section>
+
+            <!-- Seção Meus Agendamentos -->
+            <section id="meus-agendamentos" class="section">
+                <h2>Meus Agendamentos</h2>
+                <div id="lista-agendamentos" class="agendamentos-list">
+                    <!-- Agendamentos serão carregados aqui -->
+                </div>
+            </section>
+
+            <!-- Seção Serviços -->
+            <section id="servicos" class="section">
+                <h2>Nossos Serviços</h2>
+                <div class="servicos-grid">
+                    <div class="servico-card">
+                        <i class="fas fa-hand-paper"></i>
+                        <h3>Unhas Simples</h3>
+                        <p>Corte, lixamento e esmaltação simples</p>
+                        <span class="preco">R$ 45,00</span>
+                    </div>
+                    <div class="servico-card">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>Unhas Decoradas</h3>
+                        <p>Artes e desenhos personalizados</p>
+                        <span class="preco">R$ 65,00</span>
+                    </div>
+                    <div class="servico-card">
+                        <i class="fas fa-magic"></i>
+                        <h3>Alongamento em Gel</h3>
+                        <p>Unhas alongadas com gel</p>
+                        <span class="preco">R$ 120,00</span>
+                    </div>
+                    <div class="servico-card">
+                        <i class="fas fa-gem"></i>
+                        <h3>Alongamento em Fibra</h3>
+                        <p>Unhas alongadas com fibra de vidro</p>
+                        <span class="preco">R$ 150,00</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seção Sobre -->
+            <section id="sobre" class="section">
+                <h2>Sobre Nós</h2>
+                <div class="sobre-content">
+                    <img src="icons/icon-192.png" alt="Nails Designer" class="sobre-logo">
+                    <p>Somos especialistas em nail design com anos de experiência. Utilizamos produtos de alta qualidade e seguimos todas as normas de higiene e segurança.</p>
+                    <div class="contato-info">
+                        <p><i class="fab fa-whatsapp"></i> (11) 99999-9999</p>
+                        <p><i class="fab fa-instagram"></i> @nailsdesigner</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Rua das Unhas, 123 - São Paulo/SP</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
